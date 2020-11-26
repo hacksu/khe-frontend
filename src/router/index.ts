@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
-//import Dashboard from '../views/Dashboard.vue'
 import NotFound from '../views/NotFound.vue'
 
 import store from '@/store'
@@ -57,13 +56,13 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: '',
         name: 'Dashboard',
-        component: () => import(/* webpackChunkName: 'dashboard' */ '../views/Dashboard/Landing.vue'),
+        component: () => import(/* webpackChunkName: 'dashboard' */ '../views/dashboard/Landing.vue'),
       },
       {
         path: 'apply',
         alias: ['application'],
         name: 'Apply',
-        component: () => import(/* webpackChunkName: "dashboard" */ '../views/Dashboard/Apply.vue'),
+        component: () => import(/* webpackChunkName: "dashboard" */ '../views/dashboard/Apply.vue'),
       }
     ],
   }

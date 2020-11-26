@@ -21,7 +21,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-
+@import "@/scss/views/dashboard";
 
 
 </style>

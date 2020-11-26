@@ -8,6 +8,8 @@
 </template>
 
 <style lang="scss">
+// @/global.scss and @/scss/index.scss are imported via vue.config.js
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
