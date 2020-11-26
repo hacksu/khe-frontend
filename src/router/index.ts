@@ -82,4 +82,12 @@ const router = createRouter({
   routes
 })
 
+router.beforeEach((to, from, next) => {
+  if (to.path == '/apply') { // redirect /apply to /dashboard/apply
+    next({ name: 'Apply', })
+  } else {
+    next();
+  }
+})
+
 export default router

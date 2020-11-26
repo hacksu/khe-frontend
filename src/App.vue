@@ -1,7 +1,7 @@
 <template>
   <div id="nav" v-if="!$route.path.includes('dashboard')">
     <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link> |
+    <router-link to="/apply">Apply</router-link> |
     <router-link to="/dashboard">Hacker Dashboard</router-link>
   </div>
   <router-view/>
