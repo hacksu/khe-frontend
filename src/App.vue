@@ -1,11 +1,24 @@
 <template>
-  <div id="nav" v-if="!$route.path.includes('dashboard')">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/apply">Apply</router-link> |
+  <Navbar id="nav" v-if="!$route.path.includes('dashboard')">
+    <router-link to="/">Home</router-link>
+    <router-link to="/sponsors">Sponsors</router-link>
+    <router-link to="/apply">Apply</router-link>
     <router-link to="/dashboard">Hacker Dashboard</router-link>
-  </div>
+  </Navbar>
   <router-view/>
 </template>
+
+<script lang="ts">
+import { defineComponent } from 'vue';
+import Navbar from './components/Navbar.vue'
+
+export default defineComponent({
+  components: {
+    Navbar,
+  }
+});
+</script>
+
 
 <style lang="scss">
 // @/global.scss and @/scss/index.scss are imported via vue.config.js
@@ -18,16 +31,4 @@
   color: #2c3e50;
 }
 
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
 </style>

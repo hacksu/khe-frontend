@@ -37,7 +37,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import "@/scss/views/Login.scss";
+@import "@/scss/views/Login.scss"; // Essential SCSS
 
 
 </style>

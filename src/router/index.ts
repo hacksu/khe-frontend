@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import Home from '../views/Home.vue'
+import Sponsors from '../views/Sponsors.vue'
 import Login from '../views/Login.vue'
 import NotFound from '../views/NotFound.vue'
 
@@ -35,9 +36,10 @@ const routes: Array<RouteRecordRaw> = [
     },
   },
   {
-    path: '/about',
-    name: 'About',
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    path: '/sponsors',
+    name: 'Sponsors',
+    alias: ['/sponsor', '/sponsorship'],
+    component: Sponsors
   },
   {
     path: '/dashboard',
