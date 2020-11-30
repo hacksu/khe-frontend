@@ -1,9 +1,9 @@
 <template>
   <div class="dashboard">
-    <div id="nav">
-        <router-link to="/">Home</router-link> |
+    <Navbar id="nav">
+        <router-link to="/">Home</router-link>
         <router-link to="/dashboard">Dashboard</router-link>
-    </div>
+    </Navbar>
     Hacker Dashboard
     <router-view/>
   </div>
@@ -11,10 +11,12 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import Navbar from '@/components/Navbar.vue'
 
 export default defineComponent({
   name: 'Dashboard',
   components: {
+    Navbar,
 
   }
 });

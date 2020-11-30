@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/Logo.png" style="max-width: 80vw; max-height: 30vh;">
+    <img alt="Vue logo" src="../assets/logo.png" style="max-width: 80vw; max-height: 30vh;">
     <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
     <SponsorList v-if="showSponsorList"/>
     <FAQ/>

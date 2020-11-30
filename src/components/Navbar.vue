@@ -1,9 +1,9 @@
 <template>
   <div class="navbar">
-    <router-link to="/" class="home-logo"><img src="@/assets/Logo.png"></router-link>
+    <router-link to="/" class="home-logo"><img src="@/assets/logo.png"></router-link>
     <button class="menu-btn" v-if="mobile" v-on:click="menuOpen = !menuOpen"><img src="@/assets/Hamburger.svg"></button>
     <slot v-if="!mobile"/>
-    
+
     <teleport to="#app">
         <div id="navmenu" v-bind:class="{ active: menuOpen, }">
             <div class="navbar menu">
@@ -15,6 +15,7 @@
         </div>
     </teleport>
   </div>
+
 </template>
 
 <script lang="ts">
@@ -72,6 +73,7 @@ $navbar-height: 38px;
     .home-logo {
         float: left;
         img {
+            position: absolute;
             height: calc(#{$navbar-height} - 10px);
             margin-top: -5px;
         }
