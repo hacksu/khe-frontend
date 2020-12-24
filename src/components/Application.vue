@@ -47,6 +47,11 @@ export default defineComponent({
         this.failure = e;
       }
     },
+
+    // Same validation as executed on the server.
+    // Server fetches some schema (such as application) from frontend code
+    // Result: Backend and Frontend Schema always in sync, even in validation.
+
     // eslint-disable-next-line
     async validate(paths?: Array<string> | string): Promise<any> {
       return await MongooseValidate(Schema, this.application, paths);
@@ -55,24 +60,7 @@ export default defineComponent({
     validateSync(paths?: Array<string> | string): any {
       return MongooseValidateSync(Schema, this.application, paths);
     },
-    /*oldvalidate(paths?: Array<string> | string): any {
-      if (paths) {
-        // Validate specific path(s)
-        if (typeof paths == 'string') {
-          // Only 1 path provides
-          return Validate(scope(Schema, String(paths)), scope(this.application, String(paths)))
-        } else {
-          // Array of paths
-          const validate = this.validate;
-          return Object.fromEntries(Object.values(paths).map((o: string) => {
-            return [o, validate(o)];
-          }))
-        }
-      } else {
-        // Validate whole application
-        throw new Error('Validating a whole application has not been implemented yet! For now, specify paths manually.')
-      }
-    },*/
+
   },
   async mounted() {
     await this.fetchData();
