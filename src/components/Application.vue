@@ -11,7 +11,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { Validate } from '@/schema';
+import { MongooseValidate, MongooseValidateSync } from '@/schema';
 import { Schema, State } from '@/schema/application';
 
 // eslint-disable-next-line
@@ -28,7 +28,7 @@ export default defineComponent({
     return {
       loaded: false,
       failure: false,
-      application: State,
+      application: JSON.parse(JSON.stringify(State)),
     };
   },
   methods: {
@@ -47,7 +47,15 @@ export default defineComponent({
         this.failure = e;
       }
     },
-    validate(paths?: Array<string> | string): any {
+    // eslint-disable-next-line
+    async validate(paths?: Array<string> | string): Promise<any> {
+      return await MongooseValidate(Schema, this.application, paths);
+    },
+    // eslint-disable-next-line
+    validateSync(paths?: Array<string> | string): any {
+      return MongooseValidateSync(Schema, this.application, paths);
+    },
+    /*oldvalidate(paths?: Array<string> | string): any {
       if (paths) {
         // Validate specific path(s)
         if (typeof paths == 'string') {
@@ -62,15 +70,17 @@ export default defineComponent({
         }
       } else {
         // Validate whole application
-
+        throw new Error('Validating a whole application has not been implemented yet! For now, specify paths manually.')
       }
-    },
+    },*/
   },
   async mounted() {
     await this.fetchData();
-    console.log('All: ', this.validate());
-    console.log('Bruh.Ok: ', this.validate('bruh.ok'));
-    console.log('Phone and Name: ', this.validate(['phone', 'name']));
+    //console.log('All: ', await this.validate());
+    //console.log('Bruh.Ok: ', await this.validate('bruh.ok'));
+    //console.log('Phone and Name: ', await this.validate(['phone', 'name']));
+    this.application.bruh.ok = 'yeeee';
+    console.log('Bruh.Ok: ', await this.validate(['bruh.ok']));
   }
 });
 </script>
