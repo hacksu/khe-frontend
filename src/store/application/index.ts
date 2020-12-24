@@ -1,16 +1,19 @@
-import validation from './validation'
+
 
 export default {
   namespaced: true,
 
   state: () => {
     return {
-      // state
-      loaded: false,
-    }
+
+    };
   },
   getters: {
-
+    /*validate: (state: State) => (path: string) => {
+      console.log(state, path);
+      console.log(validation)
+      return 'bruh';
+    },*/
   },
   actions: {
 
