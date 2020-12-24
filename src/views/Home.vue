@@ -6,6 +6,7 @@
     <FAQ/>
     <Contact/>
     <Map/>
+    <Application/>
   </div>
 </template>
 
@@ -16,6 +17,7 @@ import SponsorList from '@/components/SponsorList.vue';
 import Contact from '@/components/Contact.vue';
 import Map from '@/components/Map.vue';
 import FAQ from '@/components/FAQ.vue';
+import Application from '@/components/Application.vue';
 
 export default defineComponent({
   name: 'Home',
@@ -30,6 +32,7 @@ export default defineComponent({
     Contact,
     Map,
     FAQ,
+    Application,
   },
 });
 </script>

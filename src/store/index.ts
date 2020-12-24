@@ -1,5 +1,4 @@
 import { createStore } from 'vuex'
-import application from './application'
 
 export default createStore({
   state: {
@@ -16,6 +15,5 @@ export default createStore({
     authStatus: state => state.status,
   },
   modules: {
-    application,
   }
 })
