@@ -18,6 +18,7 @@ const routes: Array<RouteRecordRaw> = [
     alias: ['/signup', '/register'],
     component: Login,
     beforeEnter: (to, from, next) => {
+      console.log('wat')
       // if we are logged in, redirect to query-specified OR dashboard
       if (store.getters.isLoggedIn) {
         if (to.query.redirect) {
