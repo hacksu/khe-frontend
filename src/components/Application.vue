@@ -14,7 +14,7 @@ import { MongooseValidate, MongooseValidateSync } from '@/schema';
 import { Schema, State } from '@/schema/application';
 
 // eslint-disable-next-line
-const scope = function(obj: any, path: string) {
+const scope = function(obj, path) {
   for (const key of path.split('.')) {
     obj = obj[key];
   }

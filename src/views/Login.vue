@@ -49,10 +49,10 @@ export default {
 
       },
       login(evt) {
-        console.log('login')
+        console.log('login', evt)
       },
       signup(evt) {
-        console.log('signup')
+        console.log('signup', evt)
       },
       switchAction() {
         if (this.action == 'login') {
