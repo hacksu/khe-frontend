@@ -18,10 +18,9 @@
 
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script>
 
-export default defineComponent({
+export default {
   name: 'Navbar',
   data() {
       return {
@@ -44,7 +43,7 @@ export default defineComponent({
           this.menuOpen = true;
       }
   }
-});
+};
 </script>
 
 <style lang="scss">

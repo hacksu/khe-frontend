@@ -9,8 +9,7 @@
   Failure in loading: {{ failure }}
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script>
 import { MongooseValidate, MongooseValidateSync } from '@/schema';
 import { Schema, State } from '@/schema/application';
 
@@ -22,7 +21,7 @@ const scope = function(obj: any, path: string) {
   return obj;
 }
 
-export default defineComponent({
+export default {
   name: 'Application',
   data() {
     return {
@@ -53,11 +52,11 @@ export default defineComponent({
     // Result: Backend and Frontend Schema always in sync, even in validation.
 
     // eslint-disable-next-line
-    async validate(paths?: Array<string> | string): Promise<any> {
+    async validate(paths) {
       return await MongooseValidate(Schema, this.application, paths);
     },
     // eslint-disable-next-line
-    validateSync(paths?: Array<string> | string): any {
+    validateSync(paths) {
       return MongooseValidateSync(Schema, this.application, paths);
     },
 
@@ -70,7 +69,7 @@ export default defineComponent({
     this.application.bruh.ok = 'yeeee';
     console.log('Bruh.Ok: ', await this.validate(['bruh.ok']));
   }
-});
+};
 </script>
 
 <style scoped lang="scss">

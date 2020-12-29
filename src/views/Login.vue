@@ -20,13 +20,12 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script>
 import store from '@/store';
 import router from '@/router';
 import IconButton from '@/components/input/IconButton.vue';
 
-export default defineComponent({
+export default {
   name: 'Login',
   data() {
     return {
@@ -49,10 +48,10 @@ export default defineComponent({
           this.loginSuccess();
 
       },
-      login(evt: Event) {
+      login(evt) {
         console.log('login')
       },
-      signup(evt: Event) {
+      signup(evt) {
         console.log('signup')
       },
       switchAction() {
@@ -75,7 +74,7 @@ export default defineComponent({
           }
       }
   },
-});
+};
 </script>
 
 <style lang="scss" scoped>

@@ -9,17 +9,16 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script>
 import Navbar from '@/components/Navbar.vue'
 
-export default defineComponent({
+export default {
   name: 'Dashboard',
   components: {
     Navbar,
 
   }
-});
+};
 </script>
 
 <style lang="scss" scoped>

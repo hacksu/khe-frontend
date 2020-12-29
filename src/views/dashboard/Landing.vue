@@ -4,15 +4,14 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script>
 
-export default defineComponent({
+export default {
   name: 'Landing',
   components: {
 
   }
-});
+};
 </script>
 
 <style lang="scss" scoped>

@@ -5,10 +5,9 @@
   </button>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script>
 
-export default defineComponent({
+export default {
   name: 'IconButton',
   props: {
     img: {
@@ -16,7 +15,7 @@ export default defineComponent({
       type: String,
     }
   },
-});
+};
 </script>
 
 <style scoped lang="scss">

@@ -10,8 +10,7 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script>
 import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
 import SponsorList from '@/components/SponsorList.vue';
 import Contact from '@/components/Contact.vue';
@@ -19,7 +18,7 @@ import Map from '@/components/Map.vue';
 import FAQ from '@/components/FAQ.vue';
 import Application from '@/components/Application.vue';
 
-export default defineComponent({
+export default {
   name: 'Home',
   data() {
     return {
@@ -34,7 +33,7 @@ export default defineComponent({
     FAQ,
     Application,
   },
-});
+};
 </script>
 
 <style lang="scss" scoped>

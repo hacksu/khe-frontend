@@ -8,15 +8,14 @@
   <router-view/>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script>
 import Navbar from './components/Navbar.vue'
 
-export default defineComponent({
+export default {
   components: {
     Navbar,
   }
-});
+};
 </script>
 
 
