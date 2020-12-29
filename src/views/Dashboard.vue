@@ -1,27 +1,28 @@
 <template>
   <div class="dashboard">
-    <div id="nav">
-        <router-link to="/">Home</router-link> |
+    <Navbar id="nav">
+        <router-link to="/">Home</router-link>
         <router-link to="/dashboard">Dashboard</router-link>
-    </div>
+    </Navbar>
     Hacker Dashboard
     <router-view/>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script>
+import Navbar from '@/components/Navbar.vue'
 
-export default defineComponent({
+export default {
   name: 'Dashboard',
   components: {
+    Navbar,
 
   }
-});
+};
 </script>
 
 <style lang="scss" scoped>
-@import "@/scss/views/dashboard";
+@import "@/scss/views/dashboard"; // Essential SCSS
 
 
 </style>

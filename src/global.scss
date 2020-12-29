@@ -1,1 +1,15 @@
 $red: red;
+
+$color-bg-1: white;
+
+@mixin rounded {
+    border-radius: 1em;
+}
+
+@mixin vertical-shadow {
+    box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.25);
+}
+
+button {
+    border: none;
+}

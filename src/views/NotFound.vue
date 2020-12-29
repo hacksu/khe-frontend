@@ -4,19 +4,18 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script>
 
-export default defineComponent({
+export default {
   name: 'NotFound',
   components: {
 
   }
-});
+};
 </script>
 
 <style lang="scss" scoped>
-@import "@/scss/views/NotFound.scss";
+@import "@/scss/views/NotFound.scss"; // Essential SCSS
 
 
 

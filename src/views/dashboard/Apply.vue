@@ -4,19 +4,18 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script>
 
-export default defineComponent({
+export default {
   name: 'Apply',
   components: {
 
   }
-});
+};
 </script>
 
 <style lang="scss" scoped>
-@import "@/scss/views/dashboard/Apply.scss";
+@import "@/scss/views/dashboard/Apply.scss"; // Essential SCSS
 
 
 

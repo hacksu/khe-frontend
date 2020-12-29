@@ -1,11 +1,13 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
+
 import Home from '../views/Home.vue'
+import Sponsors from '../views/Sponsors.vue'
 import Login from '../views/Login.vue'
 import NotFound from '../views/NotFound.vue'
 
 import store from '@/store'
 
-const routes: Array<RouteRecordRaw> = [
+const routes = [
   {
     path: '/',
     name: 'Home',
@@ -17,6 +19,7 @@ const routes: Array<RouteRecordRaw> = [
     alias: ['/signup', '/register'],
     component: Login,
     beforeEnter: (to, from, next) => {
+      console.log('wat')
       // if we are logged in, redirect to query-specified OR dashboard
       if (store.getters.isLoggedIn) {
         if (to.query.redirect) {
@@ -35,9 +38,10 @@ const routes: Array<RouteRecordRaw> = [
     },
   },
   {
-    path: '/about',
-    name: 'About',
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    path: '/sponsors',
+    name: 'Sponsors',
+    alias: ['/sponsor', '/sponsorship'],
+    component: Sponsors
   },
   {
     path: '/dashboard',
