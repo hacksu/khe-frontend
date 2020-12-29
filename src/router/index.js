@@ -1,4 +1,5 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
+
 import Home from '../views/Home.vue'
 import Sponsors from '../views/Sponsors.vue'
 import Login from '../views/Login.vue'
@@ -6,7 +7,7 @@ import NotFound from '../views/NotFound.vue'
 
 import store from '@/store'
 
-const routes: Array<RouteRecordRaw> = [
+const routes = [
   {
     path: '/',
     name: 'Home',
