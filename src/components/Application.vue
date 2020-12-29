@@ -1,7 +1,7 @@
 <template>
   <div class="application">
     APPLICATION
-    <ApplicationPages/>
+    <ApplicationPages v-bind:application="application"/>
   </div>
   Loaded: {{ loaded }}
   <br>
