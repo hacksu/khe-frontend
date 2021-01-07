@@ -5,7 +5,7 @@
         <router-link to="/dashboard">Dashboard</router-link>
     </Navbar>
     Hacker Dashboard-->
-    <div class="dashboard-nav" v-bind:class="{ 'show': menu, }">
+    <!--<div class="dashboard-nav" v-bind:class="{ 'show': menu, }">
       <div class="buttons" style="padding: 20px;">
         <router-link to="/">
           <img alt="Vue logo" src="../assets/logo.png" style="width: 80%; padding-top: 2vh">
@@ -15,7 +15,8 @@
         <router-link to="/dashboard/application">Apply</router-link>
         <router-link to="/dashboard/help">Help</router-link>
       </div>
-    </div>
+    </div>-->
+    <Navigation view="dashboard" format="side"/>
     <div class="dashboard-view">
       <div class="dashboard-header">
         <h1>{{ currentViewName }}</h1>
@@ -27,6 +28,7 @@
 
 <script>
 //import Navbar from '@/components/Navbar.vue'
+import Navigation from '@/components/Navigation.vue'
 
 export default {
   name: 'Dashboard',
@@ -42,6 +44,7 @@ export default {
   },
   components: {
     //Navbar,
+    Navigation,
 
   }
 };

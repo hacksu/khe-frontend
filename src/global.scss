@@ -1,19 +1,89 @@
+
+@import '@/scss/responsive.scss';
+
 $red: red;
 
 $color-bg-1: white;
 
+
+$navbar-height: 68px; //calc(4vh + 30px);
+$navbar-height-remaining: calc(100vh - 38px); //calc(100vh - 4vh - 30px);
+
+
 body {
   margin: 0px;
+  overflow-x: hidden;
 }
 
-@mixin rounded {
-    border-radius: 1em;
+$white: #fff;
+
+@mixin white {
+  color: $white;
+}
+@mixin white-bg {
+  background-color: rgb(235, 238, 240);
 }
 
 @mixin vertical-shadow {
     box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.25);
 }
 
+@mixin rounded {
+  //@include responsive(border-radius, 10px, 10px, 10px);
+  border-radius: 10px; //1vh;
+}
+
+@mixin transition($scale: 1.1, $brightness: 120%, $focus: false) {
+  @include display-not(mobile) {
+    transition: transform 0.25s, filter 0.25s;
+    &:not([disabled]):hover {
+      transform: scale($scale);
+      filter: brightness($brightness);
+    }
+    @if $focus == true {
+      &:not([disabled]):focus {
+        transform: scale($scale);
+        filter: brightness($brightness);
+      }
+    }
+  }
+}
+
+@mixin center {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+.center {
+  @include center;
+}
+
+@mixin background($img, $style: 'cover') {
+  background: {
+    image: $img;
+    repeat: no-repeat;
+    position: center;
+    size: $style;
+  }
+}
+
+
+button, input, textarea {
+  @include rounded;
+  @include white;
+
+  border: none;
+  //padding: 1.25vh;
+  @include responsive(padding, 8px, 10px, 12px);
+  outline: none;
+}
 button {
-    border: none;
+  @include transition;
+  cursor: pointer;
+}
+input {
+  //@include transition(1.025, 100%, true);
+}
+input, textarea {
+  color: inherit;
 }

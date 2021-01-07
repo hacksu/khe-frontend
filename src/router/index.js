@@ -82,6 +82,10 @@ routes.push({
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
+  scrollBehavior() {
+    document.querySelector('#app').scrollIntoView();
+    return { x: 0, y: 0 };
+  },
   routes
 })
 
@@ -91,6 +95,10 @@ router.beforeEach((to, from, next) => {
   } else {
     next();
   }
+})
+
+router.afterEach((to) => {
+  document.title = to.meta.title || to.name || 'Kent Hack Enough';
 })
 
 export default router

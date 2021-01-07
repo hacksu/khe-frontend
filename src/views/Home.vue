@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" style="max-width: 80vw; max-height: 30vh;">
+    <Landing/>
     <SponsorList v-if="showSponsorList"/>
     <FAQ/>
     <Contact/>
@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import Landing from '@/components/Landing.vue';
 import SponsorList from '@/components/SponsorList.vue';
 import Contact from '@/components/Contact.vue';
 import Map from '@/components/Map.vue';
@@ -24,6 +25,7 @@ export default {
     }
   },
   components: {
+    Landing,
     SponsorList,
     Contact,
     Map,

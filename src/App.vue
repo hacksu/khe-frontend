@@ -1,19 +1,22 @@
 <template>
-  <Navbar id="nav" v-if="!$route.path.includes('dashboard')">
+  <!--<Navbar id="nav" v-if="!$route.path.includes('dashboard')">
     <router-link to="/">Home</router-link>
     <router-link to="/sponsors">Sponsors</router-link>
     <router-link to="/apply">Apply</router-link>
     <router-link to="/dashboard">Hacker Dashboard</router-link>
-  </Navbar>
+  </Navbar>-->
+  <Navigation v-if="!$route.path.includes('dashboard')"/>
   <router-view/>
 </template>
 
 <script>
-import Navbar from './components/Navbar.vue'
+//import Navbar from './components/Navbar.vue'
+import Navigation from '@/components/Navigation.vue'
 
 export default {
   components: {
-    Navbar,
+    //Navbar,
+    Navigation,
   }
 };
 </script>
