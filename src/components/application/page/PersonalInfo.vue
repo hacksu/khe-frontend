@@ -1,17 +1,26 @@
 <template>
   <div class="personal-info">
-    huh
-    {{ application }}
+    ok personal info
+    <input v-model="application.name">
   </div>
 </template>
 
 <script>
+import { inherit } from './logic.js';
 
-export default {
-  props: {
-    application: Object,
+export default inherit({
+  methods: {
+    validate() {
+      return true;
+    }
+  },
+  mounted() {
+    console.log('ok did mount');
+    //console.log(this);
+    //console.log(this.application);
+    //this.super();
   }
-};
+});
 </script>
 
 <style scoped lang="scss">

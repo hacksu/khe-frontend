@@ -44,8 +44,14 @@ export default {
         // Assigns instead of sets.
         //  New fields can be added via code that won't be overwritten by older saved data
         Object.assign(this.application, data);
+        this.application.__proto__ = {
+          editing: (this.application._id ? true : false),
+        };
         this.loaded = true;
         this.failure = false;
+        if ('loadCallback' in this) {
+          this.loadCallback();
+        }
       } catch(e) {
         this.loaded = true;
         this.failure = e;
@@ -71,8 +77,9 @@ export default {
     //console.log('All: ', await this.validate());
     //console.log('Bruh.Ok: ', await this.validate('bruh.ok'));
     //console.log('Phone and Name: ', await this.validate(['phone', 'name']));
-    this.application.bruh.ok = 'yeeee';
-    console.log('Bruh.Ok: ', await this.validate(['bruh.ok']));
+    ///this.application.bruh.ok = 'yeeee';
+    ///console.log('Bruh.Ok: ', await this.validate(['bruh.ok']));
+    await this.validate(['name']);
   }
 };
 </script>
