@@ -15,7 +15,7 @@ export default {
     view: {
       default: 'default',
       type: String,
-    }
+    },
   },
   data() {
     return {

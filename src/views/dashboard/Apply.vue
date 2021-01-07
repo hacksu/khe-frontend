@@ -1,14 +1,17 @@
 <template>
   <div class="apply">
     Apply to KHE
+    <Application/>
   </div>
 </template>
 
 <script>
+import Application from '@/components/Application.vue';
 
 export default {
   name: 'Apply',
   components: {
+    Application,
 
   }
 };

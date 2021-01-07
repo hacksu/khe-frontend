@@ -10,5 +10,6 @@ export const navigation = {
     ['Dashboard', '/dashboard'],
     ['Edit Application', '/dashboard/apply'],
     ['Help', '/dashboard/help'],
+    ['Log Out', '/logout'],
   ],
 }

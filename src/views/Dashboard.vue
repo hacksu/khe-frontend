@@ -16,7 +16,7 @@
         <router-link to="/dashboard/help">Help</router-link>
       </div>
     </div>-->
-    <Navigation view="dashboard" format="side"/>
+    <Navigation view="dashboard" class="side"/>
     <div class="dashboard-view">
       <div class="dashboard-header">
         <h1>{{ currentViewName }}</h1>
@@ -81,9 +81,12 @@ $nav-width: 300px;
 }
 
 .dashboard-view {
-  @include desktop {
-    width: calc(100vw - #{$nav-width});
+  @include display-not(mobile) {
+    width: calc(100vw - 320px);
     float: right;
+  }
+  @include mobile {
+    margin-top: $navbar-height;
   }
   .dashboard-header {
     @include desktop {

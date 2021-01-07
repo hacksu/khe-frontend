@@ -214,4 +214,21 @@ export default {
   }
 }
 
+.navbar.side {
+  @include display-not(mobile) {
+    background-color: blue!important;
+    position: fixed;
+    height: 100vh;
+    width: 300px;
+    .buttons {
+      .navbtn {
+        display: block;
+        width: 100%;
+        height: 4vh;
+        text-align: center;
+      }
+    }
+  }
+}
+
 </style>
