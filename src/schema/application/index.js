@@ -10,7 +10,7 @@ export const State = {
 export const Schema = {
   name: {
     type: String,
-    required: true,
+    required: [true, 'Please enter your name!'],
   },
   phone: {
     type: String,
@@ -34,8 +34,12 @@ export const Schema = {
   },
 }
 
+import { Validator } from '../validator'
+export const Validators = Validator(Schema);
+export const Validate = Validators.Validate;
 
 export default {
   Schema,
   State,
+  ...Validators,
 }

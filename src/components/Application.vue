@@ -59,12 +59,12 @@ export default {
     // Result: Backend and Frontend Schema always in sync, even in validation.
 
     // eslint-disable-next-line
-    async validate(paths) {
-      return await MongooseValidate(Schema, this.application, paths);
+    async validate(paths=undefined, app=this.application) {
+      return await MongooseValidate(Schema, app, paths);
     },
     // eslint-disable-next-line
-    validateSync(paths) {
-      return MongooseValidateSync(Schema, this.application, paths);
+    validateSync(paths=undefined, app=this.application) {
+      return MongooseValidateSync(Schema, app, paths);
     },
 
   },

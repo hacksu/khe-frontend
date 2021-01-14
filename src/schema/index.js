@@ -24,8 +24,22 @@ export function MongooseValidate(schema, values, paths) {
   return mongooseModel(schema, values).validate(paths)
 }
 export function MongooseValidateSync(schema, values, paths) {
+  console.log('BRUH', schema, values, paths);
   return mongooseModel(schema, values).validateSync(paths)
 }
+/*
+export function aMongooseValidate(schema, values, paths) {
+  let model = mongooseModel(schema, values);
+  return Promise.all(paths.map(o => model.path(o).validate(resolve, function() {
+    console.log('RIP VALIDATION FAILED', )
+  })));
+  return mongooseModel(schema, values).validate(paths)
+}
+export function aMongooseValidateSync(schema, values, paths) {
+  console.log('BRUH', schema, values, paths);
+  return mongooseModel(schema, values).validateSync(paths)
+}
+*/
 
 export function oldMongooseValidate(schema, values, paths) {
   if (!(schema in Models)) {
