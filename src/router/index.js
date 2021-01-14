@@ -19,7 +19,6 @@ const routes = [
     alias: ['/signup', '/register'],
     component: Login,
     beforeEnter: (to, from, next) => {
-      console.log('wat')
       // if we are logged in, redirect to query-specified OR dashboard
       if (store.getters.isLoggedIn) {
         if (to.query.redirect) {
@@ -92,6 +91,9 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   if (to.path == '/apply') { // redirect /apply to /dashboard/apply
     next({ name: 'Apply', })
+  } else if (to.path == '/logout') {
+    store.dispatch('logout')
+    next({ name: 'Home', })
   } else {
     next();
   }
