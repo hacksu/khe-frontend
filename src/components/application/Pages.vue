@@ -20,6 +20,7 @@ export default {
   props: {
     application: Object,
   },
+  emits: ["commit"],
   data() {
     return {
       pages: Object.keys(Pages),

@@ -1,19 +1,16 @@
 <template>
   <div class="application">
     APPLICATION
-    <ApplicationPages v-bind:application="application"/>
+    <ApplicationPages v-if="loaded" v-bind:application="application" @commit="commit"/>
   </div>
   Loaded: {{ loaded }}
-  <br>
-  {{ application }}
-  <br>
-  Failure in loading: {{ failure }}
 </template>
 
 <script>
 import { MongooseValidate, MongooseValidateSync } from '@/schema';
 import { Schema, State } from '@/schema/application';
 import ApplicationPages from './application/Pages.vue';
+import _ from 'lodash';
 
 // eslint-disable-next-line
 const scope = function(obj, path) {
@@ -50,6 +47,11 @@ export default {
         this.loaded = true;
         this.failure = e;
       }
+    },
+
+    commit(mutated) {
+      console.log('ok committing', mutated);
+      _.merge(this.application, mutated)
     },
 
     // Same validation as executed on the server.
