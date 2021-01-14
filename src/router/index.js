@@ -19,7 +19,6 @@ const routes = [
     alias: ['/signup', '/register'],
     component: Login,
     beforeEnter: (to, from, next) => {
-      console.log('wat')
       // if we are logged in, redirect to query-specified OR dashboard
       if (store.getters.isLoggedIn) {
         if (to.query.redirect) {
@@ -82,15 +81,26 @@ routes.push({
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
+  scrollBehavior() {
+    document.querySelector('#app').scrollIntoView();
+    return { x: 0, y: 0 };
+  },
   routes
 })
 
 router.beforeEach((to, from, next) => {
   if (to.path == '/apply') { // redirect /apply to /dashboard/apply
     next({ name: 'Apply', })
+  } else if (to.path == '/logout') {
+    store.dispatch('logout')
+    next({ name: 'Home', })
   } else {
     next();
   }
+})
+
+router.afterEach((to) => {
+  document.title = to.meta.title || to.name || 'Kent Hack Enough';
 })
 
 export default router

@@ -10,7 +10,7 @@
       <h1>Create Account</h1>
 
       <button v-on:click="signup">Create Account</button>
-      <IconButton v-bind:img="require('@/assets/logo.png')"><span>SIGN IN WITH GITHUB</span></IconButton>
+      <!--<IconButton v-bind:img="require('@/assets/logo.png')"><span>SIGN IN WITH GITHUB</span></IconButton>-->
     </div>
     <button v-on:click="switchAction">{{ action == 'login' ? 'Create Account' : 'I already have an Account' }}</button>
 
@@ -21,15 +21,15 @@
 </template>
 
 <script>
-import store from '@/store';
-import router from '@/router';
-import IconButton from '@/components/input/IconButton.vue';
+//import store from '@/store';
+//import router from '@/router';
+//import IconButton from '@/components/input/IconButton.vue';
 
 export default {
   name: 'Login',
   data() {
     return {
-      action: this.$route.path.substr(1), //this.$route.path.includes('login') ? 'login' : 'signup',
+      action: this.$route.path.substr(1),
       email: '',
       password: '',
       name: {
@@ -39,11 +39,46 @@ export default {
     }
   },
   components: {
-    IconButton,
+    //IconButton,
 
   },
   methods: {
-      simulateLogin() {
+    login(evt) {
+      console.log('login', evt)
+      this.$store.dispatch('login', {
+        email: this.email,
+        password: this.password,
+      }).then(this.loginSuccess).catch(function(err) {
+        console.log('LOGIN FAILED', err);
+      })
+    },
+    signup(evt) {
+      console.log('signup', evt)
+    },
+    switchAction() {
+      if (this.action == 'login') {
+        history.replaceState(history.state, '', location.href.split(this.action).join('register'));
+        this.action = 'register';
+      } else {
+        history.replaceState(history.state, '', location.href.split(this.action).join('login'));
+        this.action = 'login';
+      }
+      this.$route.path = `/${this.action}`;
+    },
+    loginSuccess() {
+      let router = this.$router;
+      const { currentRoute: { value: route } } = router;
+      const { query: { redirect } } = route;
+      //const route = router.currentRoute.value;
+      if (redirect) { // route.query.redirect
+        const CamelCased = String(redirect).replace(/^./, str => str.toUpperCase());
+        router.push({ name: CamelCased, })
+      } else {
+        router.push({ name: 'Dashboard', })
+      }
+    },
+
+      /*simulateLogin() {
           store.state.token = true;
           this.loginSuccess();
 
@@ -56,10 +91,10 @@ export default {
       },
       switchAction() {
         if (this.action == 'login') {
-          history.replaceState(history.state, '', window.location.href.split(this.action).join('register'));
+          history.replaceState(history.state, '', location.href.split(this.action).join('register'));
           this.action = 'register';
         } else {
-          history.replaceState(history.state, '', window.location.href.split(this.action).join('login'));
+          history.replaceState(history.state, '', location.href.split(this.action).join('login'));
           this.action = 'login';
         }
         this.$route.path = `/${this.action}`;
@@ -72,7 +107,7 @@ export default {
           } else {
               router.push({ name: 'Dashboard', })
           }
-      }
+      }*/
   },
 };
 </script>

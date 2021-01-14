@@ -1,7 +1,6 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" style="max-width: 80vw; max-height: 30vh;">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+    <Landing/>
     <SponsorList v-if="showSponsorList"/>
     <FAQ/>
     <Contact/>
@@ -11,7 +10,7 @@
 </template>
 
 <script>
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
+import Landing from '@/components/Landing.vue';
 import SponsorList from '@/components/SponsorList.vue';
 import Contact from '@/components/Contact.vue';
 import Map from '@/components/Map.vue';
@@ -26,7 +25,7 @@ export default {
     }
   },
   components: {
-    HelloWorld,
+    Landing,
     SponsorList,
     Contact,
     Map,

@@ -1,6 +1,7 @@
 <template>
   <div class="application">
-    Contact Us
+    APPLICATION
+    <ApplicationPages v-bind:application="application"/>
   </div>
   Loaded: {{ loaded }}
   <br>
@@ -12,6 +13,7 @@
 <script>
 import { MongooseValidate, MongooseValidateSync } from '@/schema';
 import { Schema, State } from '@/schema/application';
+import ApplicationPages from './application/Pages.vue';
 
 // eslint-disable-next-line
 const scope = function(obj, path) {
@@ -29,6 +31,9 @@ export default {
       failure: false,
       application: JSON.parse(JSON.stringify(State)),
     };
+  },
+  components: {
+    ApplicationPages,
   },
   methods: {
     async fetchData() {
