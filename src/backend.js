@@ -1,11 +1,12 @@
 
 // Place empty object exports here
 // These will be filled with content loaded from the backend
+// Whatever you export on the backend inside db/client.js, redefine a placeholder here.
 export let ApplicationSchema = {};
 
 
 
-// Load up content from backend
+// Load up remote content from backend on runtime
 import _ from 'lodash';
 export default {
   install: (app) => {
@@ -14,8 +15,11 @@ export default {
       mounted() {
         if (!merged) {
           merged = true;
+          // fetch from browserify
           let imported = window.require('backend/db');
+          // get exports from this file
           import('./backend.js').then(exports => {
+            // merge remote exports into local placeholders
             _.merge(exports, imported)
           })
         }
@@ -25,6 +29,7 @@ export default {
 }
 
 
+// Validators
 import { model as Model, Schema } from 'mongoose'
 // eslint-disable-next-line
 let Models = {};
