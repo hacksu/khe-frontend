@@ -17,6 +17,12 @@ export default {
   components: {
     //Navbar,
     Navigation,
+  },
+  mounted() {
+    //let Schema = require('backend/db/user/application/schema');
+    //console.log(Schema);
+    //console.log('bruuh', window.require)
+    //console.log(window.require('backend/db/user/application/schema'));
   }
 };
 </script>
