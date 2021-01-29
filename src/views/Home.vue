@@ -17,8 +17,7 @@ import Contact from '@/components/Contact.vue';
 import Map from '@/components/Map.vue';
 import FAQ from '@/components/FAQ.vue';
 import Application from '@/components/Application.vue';
-import { ApplicationSchema } from '@/backend';
-import { Validators } from '@/backend';
+import { ApplicationSchema, Validators } from '@/backend';
 //import { db } from '@/backend';
 //let { application: { Schema: ApplicationSchema }} = db;
 //console.log(ApplicationSchema);
@@ -56,6 +55,15 @@ export default {
     }
     this.application.name = 'yea';
     console.log('valid2', this.validateSync(['name']));
+    let this_ = this;
+    window.yee = function(v) {
+      this_.application.phone = v;
+      try {
+        console.log('phone valid =', this_.validateSync(['phone']));
+      } catch(e) {
+        console.log(e);
+      }
+    }
   },
 };
 </script>

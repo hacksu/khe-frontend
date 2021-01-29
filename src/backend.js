@@ -7,8 +7,14 @@ export let ApplicationSchema = {};
 
 
 // Load up remote content from backend on runtime
+let loadingFinished;
+let loadingPromise = new Promise(resolve => {
+  loadingFinished = resolve;
+});
+export let BackendReady = loadingPromise;
 import _ from 'lodash';
 export default {
+  ready: loadingPromise,
   install: (app) => {
     let merged = false;
     app.mixin({
@@ -21,6 +27,7 @@ export default {
           import('./backend.js').then(exports => {
             // merge remote exports into local placeholders
             _.merge(exports, imported)
+            loadingFinished(true);
           })
         }
       }
