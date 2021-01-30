@@ -6,26 +6,87 @@ module.exports = {
     type: String,
     required: [true, 'Your name is required for registration'],
   },
+  education: {
+    school: {
+      type: String,
+      required: [true, 'Please provide your school/university'],
+    },
+    standing: {
+      type: String,
+      enum: [
+        'High School',
+        'Freshman',
+        'Sophomore',
+        'Junior',
+        'Senior',
+        'Graduate',
+      ],
+      required: true,
+    },
+    major: {
+      type: String,
+      required: [true, 'Please enter your major or area of focus'],
+    },
+  },
+  age: {
+    type: Number,
+    validate: {
+      validator: function(v) {
+        return v > 16;
+      },
+      message: props => `You are too young to participate.`
+    }
+  },
+  gender: {
+    type: String,
+    enum: ['Male', 'Female', 'Refuse to Specify', String],
+    required: true,
+  },
+  dietary: [
+    {
+      type: String,
+      enum: [
+        'Vegetarian',
+        'Vegan',
+        'Kosher',
+        'Gluten Free',
+        String,
+      ],
+    }
+  ],
   phone: {
     type: String,
     validate: {
       validator: function(v) {
-        //return /\d{3}-\d{3}-\d{4}/.test(v);
-        //console.log(phoneNumber(v).toJSON());
-        //return phoneNumber(v).isPossible();
-        //console.log('validating phone', v)
-        //return true;
         try {
           return phoneNumber.parsePhoneNumberWithError(v).isPossible();
         } catch (err) {
-          console.log(err.message);
+          //console.log(err.message);
           throw err;
         }
       },
       message: props => `${props.value} is not a valid phone number`
     },
     required: [true, 'A phone number is required'],
-  }
+  },
+  newbie: {
+    type: Boolean,
+    default: false,
+  },
+  agreements: {
+    conduct: {
+      type: Boolean,
+      default: false,
+      validate: (o) => o === true,
+      required: true,
+    },
+    mlh: {
+      demographic: {
+        type: Boolean,
+        default: false,
+      }
+    },
+  },
 }
 
 },{"libphonenumber-js":68}],2:[function(require,module,exports){
@@ -7806,17 +7867,14 @@ exports.DIGIT_PLACEHOLDER = core.DIGIT_PLACEHOLDER
 exports.parseRFC3966 = core.parseRFC3966
 exports.formatRFC3966 = core.formatRFC3966
 },{"../core/index.commonjs":67,"../metadata.min.json":69}],"backend/db":[function(require,module,exports){
-// Bundle Up Client Validation
-/*module.exports = {
-  application: {
-    Schema: require(`./user/application/schema.js`)
-  }
-}*/
-/*let importer = (path, name) => {
-  module.exports[name] = require('./' + path);
-}
 
-importer('user/application/schema.js', 'ApplicationSchema');*/
+// This code is run on the client
+// Used to export schema and validation from the backend to the frontend
+
+// BE SURE TO REFERENCE THESE EXPORTS INSIDE khe-frontend/src/backend.js
+//  basically, if we export "ApplicationSchema" here,
+//  we want to add "export let ApplicationSchema = {}"
+//  in khe-frontend/src/backend.js
 
 exports.ApplicationSchema = require('./user/application/schema.js');
 
