@@ -11,12 +11,19 @@ const routes = [
   {
     path: '/',
     name: 'Home',
+    meta: {
+      title: 'Kent Hack Enough',
+      scrollNav: true,
+    },
     component: Home
   },
   {
     path: '/login',
     name: 'Login',
     alias: ['/signup', '/register'],
+    meta: {
+      title: 'Kent Hack Enough - Login'
+    },
     component: Login,
     beforeEnter: (to, from, next) => {
       // if we are logged in, redirect to query-specified OR dashboard
@@ -40,19 +47,27 @@ const routes = [
     path: '/sponsors',
     name: 'Sponsors',
     alias: ['/sponsor', '/sponsorship'],
+    meta: {
+      title: 'Kent Hack Enough - Sponsors'
+    },
     component: Sponsors
   },
   {
     path: '/dashboard',
+    meta: {
+      title: 'Kent Hack Enough - Dashboard'
+    },
     component: () => import(/* webpackChunkName: 'dashboard' */ '../views/Dashboard.vue'),
     beforeEnter: (to, from, next) => {
       // ensure we are logged in, otherwise redirect
       if (store.getters.isLoggedIn) {
         next();
       } else {
-        next({ name: 'Login', query: {
-          redirect: String(to.name),
-        } })
+        next({
+          name: 'Login', query: {
+            redirect: String(to.name),
+          }
+        })
       }
     },
     children: [

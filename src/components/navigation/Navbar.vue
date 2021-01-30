@@ -1,6 +1,6 @@
 <template>
   <div class="navbar"
-    v-bind:class="{ 'scrolled': scrolled, 'fixed': !home, 'animated': !home && from }"
+    v-bind:class="{ 'scrolled': scrolled, 'fixed': !scrollNav, 'animated': !scrollNav && from }"
     v-bind:style="{ 'padding': padding, 'background-color': color, 'box-shadow': shadow, }"
   >
     <span class="colordetect" hidden></span>
@@ -24,9 +24,9 @@ export default {
       offset: 0,
       distance: 100,
       progress: 0,
-      home: false,
+      scrollNav: false,
       from: false,
-      navbarColor: [20, 32, 39],
+      //navbarColor: [20, 32, 39],
     }
   },
   computed: {
@@ -38,7 +38,7 @@ export default {
       if (this.$el) {
         let bgc = getComputedStyle(this.$el.querySelector('.colordetect')).backgroundColor;
         let a = `rgba(${bgc.substr(4).split(')')[0]}, ${this.progress})`;
-        console.log(a);
+        //console.log(a);
         return a;
       } else {
         return `rgba(${this.progress}, 0, 0, 0)`;
@@ -58,16 +58,16 @@ export default {
     computeScrolled() {
       this.offset = document.firstElementChild.scrollTop;
       this.scrolled = this.offset != 0;
-      let home = this.$route.name == 'Home';
-      if (home && !this.home) {
-        let _this = this;
+      let scrollNav = this.$route.meta.scrollNav || false;
+      if (scrollNav && !this.scrollNav) {
+        let this_ = this;
         setTimeout(function() {
-          _this.home = _this.$route.name == 'Home';
+          this_.scrollNav = this_.$route.meta.scrollNav || false;
         }, 1000)
       } else {
-        this.home = home;
+        this.scrollNav = scrollNav;
       }
-      if (home) {
+      if (scrollNav) {
         this.progress = Math.min(1, (this.offset / this.distance));
       } else {
         this.progress = 1;
