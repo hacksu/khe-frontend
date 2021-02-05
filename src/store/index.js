@@ -2,17 +2,37 @@ import { createStore } from 'vuex'
 
 export default createStore({
   state: {
-    token: localStorage.getItem('token') ?? false,
+    token: undefined,
     status: '',
-    user: {},
+    user: false,
   },
   mutations: {
     fetchToken(state) {
-      state.token = localStorage.getItem('token') ?? false;
+      state.token = localStorage.getItem('token') || false;
+      let expire1Day = new Date();
+      expire1Day.setTime(expire1Day.getTime() + (1 * 24 * 60 * 60));
+      if (state.token) {
+        document.cookie = `session_token=${state.token}; expires=${expire1Day.toUTCString()}; path=/api`;
+      } else {
+        document.cookie = `session_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/api`;
+      }
     },
+    fetchUser(state) {
+      fetch('/api/user.json')
+        .then(res => res.json())
+        .then(res => {
+          state.user = res;
+        }).catch(console.error);
+    }
   },
   actions: {
-    login({ commit }, { email, password }) {
+    init({ commit, state }) {
+      commit('fetchToken');
+      if (state.token) {
+        commit('fetchUser');
+      }
+    },
+    login({ dispatch }, { email, password }) {
       return new Promise(function(resolve, reject) {
         fetch('/api/login', {
           method: 'POST',
@@ -24,24 +44,24 @@ export default createStore({
             password,
           })
         })
-        .then(res => {
-          if (!res.ok) {
-            throw new Error(`Request Failed: ${res.status} (${res.statusText})`)
-          }
-          return res.json()
-        })
-        .then(({ token }) => {
-          localStorage.setItem('token', token);
-          commit('fetchToken');
-          resolve(true);
-        }).catch(err => {
-          // DEBUG
-          localStorage.setItem('token', 'debug');
-          commit('fetchToken');
-          resolve(true);
-          console.log(reject, err);
-          //reject(err);
-        })
+          .then(res => {
+            if (!res.ok) {
+              throw new Error(`Request Failed: ${res.status} (${res.statusText})`)
+            }
+            return res.json()
+          })
+          .then(({ token }) => {
+            localStorage.setItem('token', token);
+            dispatch('init');
+            resolve(true);
+          }).catch(err => {
+            // DEBUG
+            localStorage.setItem('token', 'hmmmok');
+            dispatch('init');
+            resolve(true);
+            console.log(reject, err);
+            //reject(err);
+          })
       })
     },
     async logout({ commit, state }) {
@@ -52,7 +72,7 @@ export default createStore({
             'Authorization': `Bearer ${state.token}`,
           }
         })
-      } catch(e) {
+      } catch (e) {
         // idk what to do
         console.error(e);
         console.log(req);

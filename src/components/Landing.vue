@@ -3,6 +3,8 @@
     <div class="content">
       <div class="background"/>
       <img alt="Vue logo" src="@/assets/logo.png" style="max-width: 80vw; max-height: 30vh;">
+      <br><br>
+      <span style="color: white">{{ $store.state.user }}</span>
 
     </div>
   </div>

@@ -6,6 +6,7 @@
     v-bind:style="options ? { 'float': (options.align || 'inherit'), } : {}">
       {{ text }}
     </Navbtn>
+    <Navbtn v-if="$store.isLoggedIn" link="/logout">Logout</Navbtn>
   </Navbar>
 </template>
 

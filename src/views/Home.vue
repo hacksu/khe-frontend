@@ -1,12 +1,10 @@
 <template>
   <div class="home">
     <Landing/>
-    {{ ApplicationSchema }}
     <SponsorList v-if="showSponsorList"/>
     <FAQ/>
     <Contact/>
     <Map/>
-    <Application/>
   </div>
 </template>
 
@@ -16,8 +14,8 @@ import SponsorList from '@/components/SponsorList.vue';
 import Contact from '@/components/Contact.vue';
 import Map from '@/components/Map.vue';
 import FAQ from '@/components/FAQ.vue';
-import Application from '@/components/Application.vue';
-import { ApplicationSchema, Validators } from '@/backend';
+//import Application from '@/components/Application.vue';
+//import { ApplicationSchema, Validators } from '@/backend';
 //import { db } from '@/backend';
 //let { application: { Schema: ApplicationSchema }} = db;
 //console.log(ApplicationSchema);
@@ -28,15 +26,15 @@ export default {
   data() {
     return {
       showSponsorList: true,
-      ApplicationSchema,
+      /*ApplicationSchema,
       application: {
         //name: '',
         //phone: '',
-      },
+      },*/
     }
   },
   methods: {
-    ...Validators(ApplicationSchema, o => o.application),
+    //...Validators(ApplicationSchema, o => o.application),
   },
   components: {
     Landing,
@@ -44,10 +42,10 @@ export default {
     Contact,
     Map,
     FAQ,
-    Application,
+    //Application,
   },
   mounted() {
-    console.log(ApplicationSchema);
+    /*console.log(ApplicationSchema);
     try {
       console.log('valid1', this.validateSync(['name']));
     } catch(e) {
@@ -63,7 +61,7 @@ export default {
       } catch(e) {
         console.log(e);
       }
-    }
+    }*/
   },
 };
 </script>

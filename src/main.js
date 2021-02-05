@@ -4,4 +4,6 @@ import router from './router'
 import store from './store'
 import backend from './backend'
 
+store.dispatch('init');
+
 createApp(App).use(store).use(router).use(backend).mount('#app')
