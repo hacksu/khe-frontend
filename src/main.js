@@ -6,4 +6,5 @@ import backend from './backend'
 
 store.dispatch('init');
 
-createApp(App).use(store).use(router).use(backend).mount('#app')
+export let app = createApp(App);
+app.use(store).use(router).use(backend).mount('#app')

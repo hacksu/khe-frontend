@@ -47,14 +47,15 @@ function mongooseModel(schema, values) {
       cache: {},
     };
   }
-  if (!(values in Models[schema].cache)) {
+  /*if (!(values in Models[schema].cache)) {
     Models[schema].cache[values] = new (Models[schema].model)(values);
   } else {
     let model = Models[schema].cache[values];
     _.merge(model, values);
     return model;
   }
-  return Models[schema].cache[values];
+  return Models[schema].cache[values];*/
+  return new (Models[schema].model)(values);
 }
 export function MongooseValidate(schema, values, paths) {
   return mongooseModel(schema, values).validate(paths)
