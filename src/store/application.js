@@ -125,8 +125,6 @@ export let logic = {
 }
 
 export function setup() {
-  console.log('this setup =', this);
-  console.log(merge);
   return {
     application: store,
     state: store.state,
@@ -166,15 +164,15 @@ updateErrorTags = function() {
 let executeValidate = function(evt, run = true) {
   let { target: el } = evt;
   if (!run) {
-    console.log('USER IS FIXING')
     el.classList.remove('invalid', 'valid')
     if (el.dataset.path in validationErrors) {
       delete validationErrors[el.dataset.path];
       updateErrorTags();
     }
   } else {
-    console.log('OKAY VALIDATE', evt)
-    store.dispatch('validate', el.dataset.path)
+    store.dispatch('validate', el.dataset.path).catch(() => {
+      console.log('Invalid')
+    })
   }
 }
 let validateListener = function(evt) {
@@ -196,12 +194,7 @@ let validateListener = function(evt) {
   }
 }
 app.directive('validate', {
-  mounted(el, binding, vnode) {
-    console.log('validate: ', {
-      el,
-      binding,
-      vnode,
-    })
+  mounted(el, binding) { // vnode
     let { value } = binding;
     if (value) {
       if (value instanceof Array) {

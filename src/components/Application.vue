@@ -38,5 +38,11 @@ export default extend({
 <style lang="scss" scoped>
 @import "@/scss/components/Application.scss"; // Essential SCSS
 
+.invalid::after {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  position: relative;
+}
 
 </style>
