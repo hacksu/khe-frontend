@@ -1,5 +1,5 @@
 <template>
-  <Navigation :routes="routes"/>
+  <Navigation :routes="routes" vertical/>
   <router-view/>
 </template>
 

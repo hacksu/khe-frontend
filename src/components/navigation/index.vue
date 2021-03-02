@@ -1,5 +1,8 @@
 <template>
-  <Navbar :routes="routes"></Navbar>
+  <Navbar id="nav" :routes="routes" :vertical="vertical"></Navbar>
+  <teleport to="body">
+    <Navbar id="nav-menu" :routes="routes" class="menu"></Navbar>
+  </teleport>
 </template>
 
 <script>
@@ -10,18 +13,11 @@ export default {
   props: {
     'routes': {
       type: Object,
-      default: [
-        {
-          title: 'Home',
-          path: '/',
-        },
-        {
-          get title() {
-            return (Math.random() * 100).toFixed(3);
-          },
-          path: '/dashboard',
-        }
-      ],
+      default: []
+    },
+    'vertical': {
+      type: Boolean,
+      default: false,
     }
   },
   components: {
@@ -30,3 +26,20 @@ export default {
 }
 
 </script>
+
+<style lang="scss">
+
+#nav, #nav-menu {
+  padding: 30px;
+
+  a {
+    font-weight: bold;
+    color: #2c3e50;
+
+    &.router-link-exact-active {
+      color: #42b983;
+    }
+  }
+}
+
+</style>
