@@ -39,6 +39,10 @@ export default {
         }
         return true;
       } else {
+        if (data.error.includes('does not exist')) {
+          localStorage.removeItem(TOKEN);
+          commit('fetchToken');
+        }
         throw new Error(data.error);
       }
 
