@@ -22,13 +22,26 @@ export default {
 }
 
 #nav {
+  padding: 30px;
   &.vertical {
     .navbtn {
       display: block;
     }
     display: block;
-    position: absolute;
+    position: fixed;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.05);
+    top: 0px;
+    left: 0px;
   }
+}
+
+#nav.vertical {
+  width: 200px;
+}
+.vertical-navigation {
+  padding-left: 280px;
+  padding-right: 280px;
 }
 
 #nav-menu {

@@ -1,7 +1,7 @@
 <template>
   <Navbar id="nav" :routes="routes" :vertical="vertical"></Navbar>
   <teleport to="body">
-    <Navbar id="nav-menu" :routes="routes" class="menu"></Navbar>
+    <Navbar id="nav-menu" :routes="routes" class="menu" hidden></Navbar>
   </teleport>
 </template>
 
@@ -30,8 +30,6 @@ export default {
 <style lang="scss">
 
 #nav, #nav-menu {
-  padding: 30px;
-
   a {
     font-weight: bold;
     color: #2c3e50;

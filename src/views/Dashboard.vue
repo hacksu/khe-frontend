@@ -1,6 +1,8 @@
 <template>
   <Navigation :routes="routes" vertical/>
-  <router-view/>
+  <div class="vertical-navigation">
+    <router-view/>
+  </div>
 </template>
 
 <script>

@@ -95,7 +95,7 @@ let redirects = {
     store.dispatch('logout').then(() => {
       next('/login');
     }).catch(() => {
-      alert('LOGOUT FAILED');
+      //alert('LOGOUT FAILED');
       next('/');
     })
   },
