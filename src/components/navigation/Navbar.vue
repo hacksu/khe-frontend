@@ -1,7 +1,9 @@
 <template>
-  <div v-if="!vertical || $display.mobile" class="navbar">
-    <button v-if="$display.mobile" class="hamburger" v-on:click="$parent.toggleMenu()">hamburger</button>
-    <router-link class="navbtn" v-bind:class="{ 'hidenav': $display.mobile, }" v-for="route in routes.filter(o => !o.disabled)" :to="route.path">{{ route.title }}</router-link>
+  <div v-if="!vertical || $display.mobile" class="navbar" v-bind:style="style">
+    <img src="../../assets/hamburger.svg" style="margin-left: 1em;" v-if="$display.mobile" class="hamburger" v-on:click="$parent.toggleMenu()">
+    <div style="padding: 0px 2em;">
+      <router-link  class="navbtn" v-bind:class="{ 'hidenav': $display.mobile, }" v-for="route in routes.filter(o => !o.disabled)" :to="route.path">{{ route.title }}</router-link>
+    </div>
   </div>
   <div v-else class="navbar vertical">
     <router-link class="navbtn" v-if="!$display.mobile" v-for="route in routes.filter(o => !o.disabled)" :to="route.path">{{ route.title }}</router-link>
@@ -13,7 +15,45 @@
 export default {
   name: 'Navbar',
   props: ['routes', 'vertical'],
+  data() {
+    return {
+      counter: 0,
+      distance: 100,
+    }
+  },
+  computed: {
+    style() {
+      this.counter;
+      let { distance, $route, $display, $el } = this;
+      let progress = 1;
+      if ($el && $el.id == 'nav') {
+        let offset = document.firstElementChild.scrollTop;
+        let scrolling = (!$display.mobile && $route.meta && $route.meta.scrollNavigation) || false;
+        if (scrolling) {
+          progress = Math.min(1, offset / distance);
+        }
+      }
+      let padding = 30 * (1 - progress) + (10 * progress);
+      //let color = getComputedStyle(this.$el)
+      return {
+        padding: `${padding}px 0px ${padding}px 0px`,
+        'box-shadow': `0 5px 15px rgba(0, 0, 0, ${0.25 * progress})!important`,
+        'position': 'fixed',
+      }
+    }
+  },
+  methods: {
+    recompute() {
+      this.counter++;
+    }
+  },
+  watch: {
 
+  },
+  mounted() {
+    let { recompute } = this;
+    document.addEventListener('scroll', recompute);
+  }
 }
 </script>
 
@@ -24,7 +64,9 @@ export default {
 }
 
 #nav {
-  padding: 30px;
+  width: 100vw;
+  top: 0px;
+  //padding: 30px;
   &.vertical {
     .navbtn {
       display: block;
@@ -36,22 +78,28 @@ export default {
     top: 0px;
     left: 0px;
   }
-}
-
-#nav.vertical {
-  width: 200px;
-}
-@include display-not(mobile) {
-  .vertical-navigation {
-    padding-left: 280px;
-    padding-right: 280px;
+  &:not(.verticle) {
+    .navbtn {
+      height: $navbar-height;
+      line-height: $navbar-height;
+      display: inline-block;
+      padding-top: 0px;
+      padding-bottom: 0px;
+    }
   }
 }
+
 
 #nav {
   .navbtn.hidenav {
     display: none;
   }
+  .hamburger {
+    display: inline-block;
+    float: left;
+    cursor: pointer;
+  }
+  height: $navbar-height;
 }
 #nav-menu {
   opacity: 0;

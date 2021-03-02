@@ -35,7 +35,10 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
+    meta: {
+      scrollNavigation: true,
+    }
   },
   {
     path: '/about',
