@@ -1,12 +1,12 @@
 let TOKEN = 'token';
 let REGISTERED_TOKEN = 'KHE_FRONTEND_ACCOUNT_REGISTERED';
 Object.defineProperties(window, {
-  'REGISTERED': {
+  'REGISTERED': { // Has the user made an account or logged in before?
     get() {
       return localStorage.getItem(REGISTERED_TOKEN) ? true : false;
     },
   },
-  'AUTHENTICATED': {
+  'AUTHENTICATED': { // Is the user currently logged in?
     get() {
       return localStorage.getItem(TOKEN) ? true : false;
     },
@@ -18,7 +18,7 @@ export default {
     token: localStorage.getItem(TOKEN) || false,
   }),
   mutations: {
-    fetchToken(state) {
+    fetchToken(state) { // Fetch session token and update cookie
       state.token = localStorage.getItem(TOKEN) || false;
       let expire1Day = new Date();
       expire1Day.setTime(expire1Day.getTime() + (1 * 24 * 60 * 60 * 1000));
@@ -33,6 +33,8 @@ export default {
     async login({ commit, state }, body) {
       console.log('TRYING TO LOGIN')
       if (body == 'session' && state.token) {
+        // Due to token based authentication,
+        // we just reupload the token to keep the session alive.
         let token = state.token;
         body = {
           token,
@@ -45,7 +47,7 @@ export default {
         },
         body: JSON.stringify(body)
       })).json();
-      console.log({ login: data, })
+      //console.log({ login: data, })
       if (data.success) {
         if ('token' in data) {
           localStorage.setItem(TOKEN, data.token);
@@ -55,14 +57,16 @@ export default {
         return true;
       } else {
         if (data.error.includes('does not exist')) {
+          // remove token as its obviously invalid
           localStorage.removeItem(TOKEN);
           commit('fetchToken');
+          return;
         }
         throw new Error(data.error);
       }
 
     },
-    async logout({ commit, state }) {
+    async logout({ commit }) {
       let token = localStorage.getItem(TOKEN);
       if (token) {
         localStorage.removeItem(TOKEN);
@@ -70,7 +74,7 @@ export default {
         return await (await fetch(`/api/user/logout?token=${token}`)).json();
       }
     },
-    async register({ commit, state }, body) {
+    async register({ commit }, body) {
       let data = await (await fetch('/api/user/register', {
         method: 'POST',
         headers: {
