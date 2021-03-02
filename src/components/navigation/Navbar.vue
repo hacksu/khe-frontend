@@ -28,9 +28,13 @@ export default {
       let { distance, $route, $display, $el } = this;
       let progress = 1;
       let color = false;
+      let scrolling = (!$display.mobile && $route.meta && $route.meta.scrollNavigation) || false;
+      let transitions = 'padding 0.15s, background-color 0.25s';
+      if (!this.color) {
+        transitions = false;
+      }
       if ($el && $el.id == 'nav') {
         let offset = document.firstElementChild.scrollTop;
-        let scrolling = (!$display.mobile && $route.meta && $route.meta.scrollNavigation) || false;
         if (scrolling) {
           progress = Math.min(1, offset / distance);
         }
@@ -48,6 +52,7 @@ export default {
         'box-shadow': `0 5px 15px rgba(0, 0, 0, ${0.25 * progress})!important`,
         'position': 'fixed',
         'background-color': color,
+        'transition': (this.color ? transitions : false)
       }
     }
   },
