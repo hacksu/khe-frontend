@@ -33,6 +33,9 @@ body, #app {
     padding: 30px;
     width: 200px;
   }
+  &:not(.verticle) {
+    background-color: red;
+  }
   .hamburger {
     height: calc(100% - 1em);
     padding: 0.5em;

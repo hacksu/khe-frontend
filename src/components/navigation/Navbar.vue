@@ -19,6 +19,7 @@ export default {
     return {
       counter: 0,
       distance: 100,
+      color: false,
     }
   },
   computed: {
@@ -26,12 +27,19 @@ export default {
       this.counter;
       let { distance, $route, $display, $el } = this;
       let progress = 1;
+      let color = false;
       if ($el && $el.id == 'nav') {
         let offset = document.firstElementChild.scrollTop;
         let scrolling = (!$display.mobile && $route.meta && $route.meta.scrollNavigation) || false;
         if (scrolling) {
           progress = Math.min(1, offset / distance);
         }
+        if (!this.color) {
+          this.color = getComputedStyle($el).backgroundColor;
+        }
+        let rgb = this.color.split('(')[1].split(')')[0].split(', ').slice(0, 3);
+        console.log(rgb);
+        color = `rgba(${rgb.join(', ')}, ${progress})`
       }
       let padding = 30 * (1 - progress) + (10 * progress);
       //let color = getComputedStyle(this.$el)
@@ -39,6 +47,7 @@ export default {
         padding: `${padding}px 0px ${padding}px 0px`,
         'box-shadow': `0 5px 15px rgba(0, 0, 0, ${0.25 * progress})!important`,
         'position': 'fixed',
+        'background-color': color,
       }
     }
   },
@@ -78,7 +87,7 @@ export default {
     top: 0px;
     left: 0px;
   }
-  &:not(.verticle) {
+  &:not(.vertical) {
     .navbtn {
       height: $navbar-height;
       line-height: $navbar-height;

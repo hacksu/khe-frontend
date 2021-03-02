@@ -30,6 +30,10 @@ export default [
     path: '/',
   },
   {
+    title: 'About',
+    path: '/about',
+  },
+  {
     title: 'Apply',
     path: '/apply',
     get disabled() {
