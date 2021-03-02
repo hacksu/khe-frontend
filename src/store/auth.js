@@ -1,4 +1,18 @@
 let TOKEN = 'token';
+let REGISTERED_TOKEN = 'KHE_FRONTEND_ACCOUNT_REGISTERED';
+Object.defineProperties(window, {
+  'REGISTERED': {
+    get() {
+      return localStorage.getItem(REGISTERED_TOKEN) ? true : false;
+    },
+  },
+  'AUTHENTICATED': {
+    get() {
+      return localStorage.getItem(TOKEN) ? true : false;
+    },
+  }
+})
+
 export default {
   state: () => ({
     token: localStorage.getItem(TOKEN) || false,
@@ -36,7 +50,7 @@ export default {
         if ('token' in data) {
           localStorage.setItem(TOKEN, data.token);
           commit('fetchToken');
-          localStorage.setItem('KHE_FRONTEND_ACCOUNT_REGISTERED', 'true');
+          localStorage.setItem(REGISTERED_TOKEN, 'true');
         }
         return true;
       } else {

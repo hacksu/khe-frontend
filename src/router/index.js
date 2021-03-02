@@ -5,7 +5,7 @@ import store from '@/store'
 
 let Authenticated = {
   beforeEnter: (to, from, next) => {
-    if (store.state.auth.token) {
+    if (AUTHENTICATED) {
       next();
     } else {
       next({
@@ -19,7 +19,7 @@ let Authenticated = {
 };
 let NotAuthenticated = {
   beforeEnter: (to, from, next) => {
-    if (!store.state.auth.token) {
+    if (!AUTHENTICATED) {
       next();
     } else {
       if ('redirect' in to.query) {
@@ -79,7 +79,7 @@ let redirects = {
   '/authenticate': ({ to, next }) => { // Detects if people have already made an account and logged in.
     // If it wants you to authenticate, people will go to /signup instead if they have not logged in
     // on this device yet. Pretty snazzy if I do say so myself.
-    if (localStorage.getItem('KHE_FRONTEND_ACCOUNT_REGISTERED')) {
+    if (REGISTERED) {
       next({
         path: '/login',
         query: to.query, // query persists due to redirect paramater.

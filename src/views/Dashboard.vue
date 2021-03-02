@@ -1,12 +1,19 @@
 <template>
-  <Navigation/>
+  <Navigation :routes="routes"/>
   <router-view/>
 </template>
 
 <script>
-import Navigation from '@/components/navigation';
+import Navigation from '@/components/navigation'
+import { DashboardRoutes } from '@/router/navigation'
+
 export default {
   name: 'Dashboard',
+  data() {
+    return {
+      routes: DashboardRoutes,
+    }
+  },
   components: {
     Navigation,
   }

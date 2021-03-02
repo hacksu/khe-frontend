@@ -1,6 +1,6 @@
 <template>
   <div>
-    <router-link v-for="route in routes.filter(o => !o.disabled)" :to="route.path">{{ route.title }}</router-link>
+    <router-link class="navbtn" v-for="route in routes.filter(o => !o.disabled)" :to="route.path">{{ route.title }}</router-link>
   </div>
 </template>
 
@@ -15,3 +15,11 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+
+.navbtn {
+  padding: 0.5em;
+}
+
+</style>
