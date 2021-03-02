@@ -1,0 +1,3 @@
+<template>
+  apply ok
+</template>
