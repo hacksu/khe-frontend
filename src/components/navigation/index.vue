@@ -1,7 +1,8 @@
 <template>
   <Navbar id="nav" :routes="routes" :vertical="vertical"></Navbar>
   <teleport to="body">
-    <Navbar id="nav-menu" :routes="routes" class="menu" hidden></Navbar>
+    <div id="nav-menu-background" v-bind:class="{ 'active': menu, }" v-on:click="menu = false"></div>
+    <Navbar id="nav-menu" :routes="routes" class="menu" v-bind:class="{ 'active': menu, }"></Navbar>
   </teleport>
 </template>
 
@@ -20,9 +21,19 @@ export default {
       default: false,
     }
   },
+  data() {
+    return {
+      menu: false,
+    }
+  },
   components: {
     Navbar,
   },
+  methods: {
+    toggleMenu() {
+      this.menu = !this.menu;
+    }
+  }
 }
 
 </script>
