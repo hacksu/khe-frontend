@@ -76,6 +76,38 @@ const routes = [
 
 let redirects = {
   '/apply': '/dashboard/apply',
+  '/authenticate': ({ to, next }) => { // Detects if people have already made an account and logged in.
+    // If it wants you to authenticate, people will go to /signup instead if they have not logged in
+    // on this device yet. Pretty snazzy if I do say so myself.
+    if (localStorage.getItem('KHE_FRONTEND_ACCOUNT_REGISTERED')) {
+      next({
+        path: '/login',
+        query: to.query, // query persists due to redirect paramater.
+      })
+    } else {
+      next({
+        path: '/signup',
+        query: to.query, // query persists due to redirect paramater.
+      })
+    }
+  },
+  '/logout': () => {
+    store.dispatch('logout').then(() => {
+      next('/login');
+    }).catch(() => {
+      alert('LOGOUT FAILED');
+      next('/');
+    })
+  },
+  '/signup/confirm_email': ({ to }) => {
+    next({
+      path: '/api/user/confirm_email',
+      query: {
+        code: to.query.code,
+        redirect: '/dashboard/apply',
+      },
+    })
+  },
 };
 
 const router = createRouter({
@@ -87,40 +119,12 @@ router.beforeEach((to, from, next) => {
   let redirect = redirects[to.path];
   if (redirect) {
     if (typeof redirect == 'function') {
-      redirect(to, from, next);
+      redirect({ to, from, next });
       return;
     } else {
       next(redirect)
       return;
     }
-  }
-  if (to.path == '/signup/confirm_email') {
-    next({
-      path: '/api/user/confirm_email',
-      query: {
-        code: to.query.code,
-        redirect: '/dashboard/apply',
-      },
-    })
-  } else if (to.path == '/authenticate') {
-    if (localStorage.getItem('KHE_FRONTEND_ACCOUNT_REGISTERED')) {
-      next({
-        path: '/login',
-        query: to.query,
-      })
-    } else {
-      next({
-        path: '/signup',
-        query: to.query,
-      })
-    }
-  } else if (to.path == '/logout') {
-    store.dispatch('logout').then(() => {
-      next('/login');
-    }).catch(() => {
-      alert('LOGOUT FAILED');
-      next(-1);
-    })
   } else {
     next();
   }

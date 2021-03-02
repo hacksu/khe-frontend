@@ -1,3 +1,4 @@
 <template>
-  hi there
+  <h1>Dashboard</h1>
+  yeaaaaa your status is [CONFIRMED] eeeeey
 </template>
