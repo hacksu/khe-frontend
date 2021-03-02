@@ -36,6 +36,7 @@ export default {
         if ('token' in data) {
           localStorage.setItem(TOKEN, data.token);
           commit('fetchToken');
+          localStorage.setItem('KHE_FRONTEND_ACCOUNT_REGISTERED', 'true');
         }
         return true;
       } else {
@@ -48,11 +49,11 @@ export default {
 
     },
     async logout({ commit, state }) {
-      let token = state.token;
+      let token = localStorage.getItem(TOKEN);
       if (token) {
         localStorage.removeItem(TOKEN);
         commit('fetchToken');
-        fetch(`/api/user/logout?token=${token}`)
+        return await (await fetch(`/api/user/logout?token=${token}`)).json();
       }
     },
     async register({ commit, state }, body) {
