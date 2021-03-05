@@ -7,7 +7,7 @@ import Application from '../application';
 
 export default {
   get enabled() {
-    if ('bruh' in Application) {
+    if (Application.bruh) {
       return false;
     } else {
       return true;
