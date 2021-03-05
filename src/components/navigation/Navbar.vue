@@ -2,15 +2,18 @@
   <div v-if="!vertical || $display.mobile" class="navbar" v-bind:style="style">
     <img src="../../assets/hamburger.svg" style="margin-left: 1em;" v-if="$display.mobile" class="hamburger" v-on:click="$parent.toggleMenu()">
     <div style="padding: 0px 2em;">
-      <router-link  class="navbtn" v-bind:class="{ 'hidenav': $display.mobile, }" v-for="route in routes.filter(o => !o.disabled)" :to="route.path">{{ route.title }}</router-link>
+      <!--<router-link  class="navbtn" v-bind:class="{ 'hidenav': $display.mobile, }" v-for="route in routes.filter(o => !o.disabled)" :to="route.path">{{ route.title }}</router-link>-->
+      <Navbtn v-bind:class="{ 'hidenav': $display.mobile, }" v-for="route in routes.filter(o => !o.disabled)" :link="route.path || route.children" :title="route.title"/>
     </div>
   </div>
   <div v-else class="navbar vertical">
-    <router-link class="navbtn" v-if="!$display.mobile" v-for="route in routes.filter(o => !o.disabled)" :to="route.path">{{ route.title }}</router-link>
+    <!--<router-link class="navbtn" v-if="!$display.mobile" v-for="route in routes.filter(o => !o.disabled)" :to="route.path">{{ route.title }}</router-link>-->
+    <Navbtn v-if="!$display.mobile" v-for="route in routes.filter(o => !o.disabled)" :link="route.path || route.children" :title="route.title"/>
   </div>
 </template>
 
 <script>
+import Navbtn from './Navbtn.vue'
 
 export default {
   name: 'Navbar',
@@ -42,7 +45,7 @@ export default {
           this.color = getComputedStyle($el).backgroundColor;
         }
         let rgb = this.color.split('(')[1].split(')')[0].split(', ').slice(0, 3);
-        console.log(rgb);
+        //console.log(rgb);
         color = `rgba(${rgb.join(', ')}, ${progress})`
       }
       let padding = 30 * (1 - progress) + (10 * progress);
@@ -67,6 +70,9 @@ export default {
   mounted() {
     let { recompute } = this;
     document.addEventListener('scroll', recompute);
+  },
+  components: {
+    Navbtn,
   }
 }
 </script>
@@ -154,6 +160,25 @@ export default {
   &.active {
     pointer-events: all;
     opacity: 1;
+  }
+}
+
+@include mobile {
+  #nav-menu.dropdown-open > div {
+    & > .navbtn, & > .navbtn-dropdown {
+      &:not(.active) {
+        display: none;
+        visibility: hidden;
+      }
+    }
+    .navbtn-dropdown {
+      & > a {
+        text-align: left;
+      }
+      .navbtn-dropdown-content {
+        position: relative;
+      }
+    }
   }
 }
 

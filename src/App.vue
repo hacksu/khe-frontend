@@ -5,7 +5,7 @@
     <router-link to="/logout" v-if="$store.state.auth.token">Logout</router-link>
     <router-link to="/login" v-if="!$store.state.auth.token">Login</router-link>
   </div>-->
-  <Navigation :routes="routes" v-if="!$route.path.includes('dashboard')"/>
+  <Navigation :routes="routes" v-if="!$route.path.toLowerCase().includes('dashboard')"/>
   <router-view/>
 </template>
 

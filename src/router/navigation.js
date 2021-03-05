@@ -16,6 +16,17 @@ let Logout = {
   },
 };
 
+let Dropdown = {
+  title: 'Dropdown',
+  children: [
+    Logout,
+    {
+      title: 'Home',
+      path: '/',
+    },
+  ]
+}
+
 let Dashboard = {
   title: 'Dashboard',
   path: '/dashboard',
@@ -41,7 +52,9 @@ export default [
     }
   },
   Dashboard,
+  Dropdown,
   Logout,
+
 ]
 
 export let DashboardRoutes = [
@@ -50,5 +63,7 @@ export let DashboardRoutes = [
     title: 'Apply',
     path: '/dashboard/apply',
   },
+  Dropdown,
   Logout,
+
 ]

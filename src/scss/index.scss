@@ -33,7 +33,7 @@ body, #app {
     padding: 30px;
     width: 200px;
   }
-  &:not(.verticle) {
+  &:not(.verticle), .navbtn-dropdown-content {
     background-color: red;
   }
   .hamburger {
