@@ -1,6 +1,6 @@
 <template>
   <Navigation :routes="routes" vertical/>
-  <div class="vertical-navigation">
+  <div class="vertical-navigation dashboard">
     <router-view/>
   </div>
 </template>
@@ -22,7 +22,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 
 
 
