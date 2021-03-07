@@ -6,13 +6,16 @@ require=(function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c=
 
 exports.hmmmm = "ok"
 
+// Allow staff site and khe.io to simulate server-sided validation logic of schema against data
+// Used to validate data and give instantanious error messages to the user
 let Validate = require('mongoose-validator');
 exports.Validate = Validate;
 
-let ApplicationSchema = require(`../models/application/schema.js`).obj;
+// Allow staff site and khe.io to validate a user's application to KHE before uploading/making changes
+let ApplicationSchema = require(`../models/application/schema`).obj;
 exports.ApplicationSchema = ApplicationSchema;
 
-},{"../models/application/schema.js":2,"mongoose-validator":74}],2:[function(require,module,exports){
+},{"../models/application/schema":2,"mongoose-validator":74}],2:[function(require,module,exports){
 // Model Schema
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
@@ -13726,7 +13729,8 @@ function whitelist(str, chars) {
 module.exports = exports.default;
 module.exports.default = exports.default;
 },{"./util/assertString":149}],"db":[function(require,module,exports){
-// Frontend Database Exports
+// Frontend Database Exports.
+// This code will only be available to khe.io, NOT staff.khe.io
 module.exports = require('./shared');
 
 },{"./shared":1}]},{},[]);
