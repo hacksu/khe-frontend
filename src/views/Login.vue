@@ -1,127 +1,75 @@
 <template>
-  <div class="login">
+  <div v-if="$route.path == '/login'">
+    <h1>Login</h1>
 
-    <div v-if="action == 'login'">
-      <h1>Login</h1>
-
+    <form @submit.prevent="login" v-on:input="error = ''">
+      <input type="email" v-model="email" placeholder="Email"><br>
+      <input type="password" v-model="password" placeholder="Password"><br>
       <button v-on:click="login">Login</button>
-    </div>
-    <div v-else>
-      <h1>Create Account</h1>
+    </form>
+    <div v-bind:style="{ 'opacity': error.length > 0 ? 1 : 0, }">{{ error || '_' }}</div>
 
-      <button v-on:click="signup">Create Account</button>
-      <!--<IconButton v-bind:img="require('@/assets/logo.png')"><span>SIGN IN WITH GITHUB</span></IconButton>-->
-    </div>
-    <button v-on:click="switchAction">{{ action == 'login' ? 'Create Account' : 'I already have an Account' }}</button>
+    <br>
 
+    <router-link to="/signup" v-on:click="swap">Don't have an account?</router-link>
+  </div>
+  <div v-else>
+    <h1>Signup</h1>
 
-    <button v-on:click="simulateLogin">Similate Login</button>
+    <form @submit.prevent="register" v-on:input="error = ''">
+      <input type="name" v-model="name" placeholder="Full Name"><br>
+      <input type="email" v-model="email" placeholder="Email"><br>
+      <input type="password" v-model="password" placeholder="Password"><br>
+      <button v-on:click="login">Login</button>
+    </form>
+    <div v-bind:style="{ 'opacity': error.length > 0 ? 1 : 0, }">{{ error || '_' }}</div>
 
+    <br>
+
+    <router-link to="/login" v-on:click="swap">Already have an account?</router-link>
   </div>
 </template>
 
 <script>
-//import store from '@/store';
-//import router from '@/router';
-//import IconButton from '@/components/input/IconButton.vue';
-
 export default {
   name: 'Login',
   data() {
     return {
-      action: this.$route.path.substr(1),
       email: '',
+      name: '',
       password: '',
-      name: {
-        first: '',
-        last: '',
-      },
+      error: '',
     }
   },
-  components: {
-    //IconButton,
-
-  },
   methods: {
-    login(evt) {
-      console.log('login', evt)
-      this.$store.dispatch('login', {
-        email: this.email,
-        password: this.password,
-      }).then(this.loginSuccess).catch(function(err) {
-        console.log('LOGIN FAILED', err);
+    swap($event) {
+      $event.preventDefault();
+      this.$router.push({ path: $event.target.href, force: true })
+    },
+    login($event) {
+      $event.preventDefault();
+      let { email, password, $route, $router } = this;
+      let data = this;
+      this.$store.dispatch('login', { email, password }).then(() => {
+        if ('redirect' in $route.query) {
+          $router.push($route.query)
+        } else {
+          $router.push('Dashboard');
+        }
+      }).catch(err => {
+        data.error = err.message;
       })
     },
-    signup(evt) {
-      console.log('signup', evt)
+    register() {
+      $event.preventDefault();
+      let { email, name, password, $route, $router } = this;
+      let data = this;
+      this.$store.dispatch('register', { email, name, password }).then(() => {
+        $router.push('Apply');
+      }).catch(err => {
+        data.error = err.message;
+      })
     },
-    switchAction() {
-      if (this.action == 'login') {
-        history.replaceState(history.state, '', location.href.split(this.action).join('register'));
-        this.action = 'register';
-      } else {
-        history.replaceState(history.state, '', location.href.split(this.action).join('login'));
-        this.action = 'login';
-      }
-      this.$route.path = `/${this.action}`;
-    },
-    loginSuccess() {
-      let router = this.$router;
-      const { currentRoute: { value: route } } = router;
-      const { query: { redirect } } = route;
-      //const route = router.currentRoute.value;
-      if (redirect) { // route.query.redirect
-        const CamelCased = String(redirect).replace(/^./, str => str.toUpperCase());
-        router.push({ name: CamelCased, })
-      } else {
-        router.push({ name: 'Dashboard', })
-      }
-    },
-
-      /*simulateLogin() {
-          store.state.token = true;
-          this.loginSuccess();
-
-      },
-      login(evt) {
-        console.log('login', evt)
-      },
-      signup(evt) {
-        console.log('signup', evt)
-      },
-      switchAction() {
-        if (this.action == 'login') {
-          history.replaceState(history.state, '', location.href.split(this.action).join('register'));
-          this.action = 'register';
-        } else {
-          history.replaceState(history.state, '', location.href.split(this.action).join('login'));
-          this.action = 'login';
-        }
-        this.$route.path = `/${this.action}`;
-      },
-      loginSuccess() { // Redirect based on success
-          const route = router.currentRoute.value;
-          if (route.query.redirect) {
-              const CamelCased = String(route.query.redirect).replace(/^./, str => str.toUpperCase());
-              router.push({ name: CamelCased, })
-          } else {
-              router.push({ name: 'Dashboard', })
-          }
-      }*/
   },
-};
-</script>
-
-<style lang="scss" scoped>
-@import "@/scss/views/Login.scss"; // Essential SCSS
-
-.iconbutton {
-  font-size: 1em;
-  padding: 10px;
-  border-radius: 0.5em;
-  span {
-    font-size: 0.8em;
-  }
 }
-
-</style>
+</script>

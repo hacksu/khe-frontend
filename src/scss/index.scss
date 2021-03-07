@@ -1,1 +1,53 @@
+@import '@/components/responsive';
 
+$navbar-height: 48px; //68px;
+$navbar-height-remaining: calc(100vh - 38px);
+
+body {
+  margin: 0;
+}
+body, #app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+}
+#app {
+  margin-top: calc(#{$navbar-height} + 60px);
+}
+
+#nav, #nav-menu {
+  a {
+    font-weight: bold;
+    color: #2c3e50;
+
+    &.router-link-exact-active {
+      color: #42b983;
+    }
+  }
+}
+
+#nav {
+  &.vertical {
+    padding: 30px;
+    width: 200px;
+  }
+  &:not(.verticle), .navbtn-dropdown-content {
+    background-color: red;
+  }
+  .hamburger {
+    height: calc(100% - 1em);
+    padding: 0.5em;
+  }
+}
+@include display-not(mobile) {
+  .vertical-navigation {
+    padding-left: 280px;
+    padding-right: 280px;
+  }
+}
+#nav-menu {
+  background-color: white;
+
+}

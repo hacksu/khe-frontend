@@ -1,121 +1,136 @@
 import { createRouter, createWebHistory } from 'vue-router'
-
 import Home from '../views/Home.vue'
-import Sponsors from '../views/Sponsors.vue'
-import Login from '../views/Login.vue'
-import NotFound from '../views/NotFound.vue'
 
 import store from '@/store'
+
+let Authenticated = {
+  beforeEnter: (to, from, next) => {
+    if (AUTHENTICATED) {
+      next();
+    } else {
+      next({
+        path: '/authenticate',
+        query: {
+          redirect: to.name,
+        }
+      })
+    }
+  },
+};
+let NotAuthenticated = {
+  beforeEnter: (to, from, next) => {
+    if (!AUTHENTICATED) {
+      next();
+    } else {
+      if ('redirect' in to.query) {
+        next(to.query.redirect);
+      } else {
+        next('/dashboard');
+      }
+    }
+  },
+}
 
 const routes = [
   {
     path: '/',
     name: 'Home',
+    component: Home,
     meta: {
-      title: 'Kent Hack Enough',
-      scrollNav: true,
-    },
-    component: Home
+      scrollNavigation: true,
+    }
+  },
+  {
+    path: '/about',
+    name: 'About',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   },
   {
     path: '/login',
     name: 'Login',
-    alias: ['/signup', '/register'],
-    meta: {
-      title: 'Kent Hack Enough - Login'
-    },
-    component: Login,
-    beforeEnter: (to, from, next) => {
-      // if we are logged in, redirect to query-specified OR dashboard
-      if (store.getters.isLoggedIn) {
-        if (to.query.redirect) {
-          // convert to camel case. anything casing beyond first letter must be done in URL.
-          // this code converts "apply" -> "Apply".
-          // it isn't a perfect solution, but for MOST routes, named components are 1 word
-          //   and this will allow lowercase url redirect paramater
-          const CamelCased = String(to.query.redirect).replace(/^./, str => str.toUpperCase());
-          next({ name: CamelCased, }) // redirect to named component
-        } else {
-          next({ name: 'Dashboard', }) // redirect to dashboard
-        }
-      } else {
-        next() // not logged in, continue to authentication
-      }
-    },
-  },
-  {
-    path: '/sponsors',
-    name: 'Sponsors',
-    alias: ['/sponsor', '/sponsorship'],
-    meta: {
-      title: 'Kent Hack Enough - Sponsors'
-    },
-    component: Sponsors
+    alias: ['/register', '/signup'],
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "login" */ '../views/Login.vue'),
+    ...NotAuthenticated,
   },
   {
     path: '/dashboard',
-    meta: {
-      title: 'Kent Hack Enough - Dashboard'
-    },
-    component: () => import(/* webpackChunkName: 'dashboard' */ '../views/Dashboard.vue'),
-    beforeEnter: (to, from, next) => {
-      // ensure we are logged in, otherwise redirect
-      if (store.getters.isLoggedIn) {
-        next();
-      } else {
-        next({
-          name: 'Login', query: {
-            redirect: String(to.name),
-          }
-        })
-      }
-    },
+    component: () => import(/* webpackChunkName: "dashboard" */ '../views/Dashboard.vue'),
     children: [
       {
         path: '',
         name: 'Dashboard',
-        component: () => import(/* webpackChunkName: 'dashboard' */ '../views/dashboard/Landing.vue'),
+        component: () => import(/* webpackChunkName: "dashboard" */ '../views/dashboard/Landing.vue'),
       },
       {
         path: 'apply',
-        alias: ['application'],
         name: 'Apply',
         component: () => import(/* webpackChunkName: "dashboard" */ '../views/dashboard/Apply.vue'),
       }
     ],
+    ...Authenticated,
   }
-]
+];
 
-// Put the 404 not found route at the end.
-// This should ALWAYS be the last route, as it is a wildcard.
-routes.push({
-  path: '/:catchAll(.*)',
-  name: 'NotFound',
-  component: NotFound,
-})
+let redirects = {
+  '/apply': '/dashboard/apply',
+  '/authenticate': ({ to, next }) => { // Detects if people have already made an account and logged in.
+    // If it wants you to authenticate, people will go to /signup instead if they have not logged in
+    // on this device yet. Pretty snazzy if I do say so myself.
+    if (REGISTERED) {
+      next({
+        path: '/login',
+        query: to.query, // query persists due to redirect paramater.
+      })
+    } else {
+      next({
+        path: '/signup',
+        query: to.query, // query persists due to redirect paramater.
+      })
+    }
+  },
+  '/logout': () => {
+    store.dispatch('logout').then(() => {
+      next('/login');
+    }).catch(() => {
+      //alert('LOGOUT FAILED');
+      next('/');
+    })
+  },
+  '/signup/confirm_email': ({ to }) => {
+    next({
+      path: '/api/user/confirm_email',
+      query: {
+        code: to.query.code,
+        redirect: '/dashboard/apply',
+      },
+    })
+  },
+};
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  scrollBehavior() {
-    document.querySelector('#app').scrollIntoView();
-    return { x: 0, y: 0 };
-  },
   routes
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.path == '/apply') { // redirect /apply to /dashboard/apply
-    next({ name: 'Apply', })
-  } else if (to.path == '/logout') {
-    store.dispatch('logout')
-    next({ name: 'Home', })
+  let redirect = redirects[to.path];
+  if (redirect) {
+    if (typeof redirect == 'function') {
+      redirect({ to, from, next });
+      return;
+    } else {
+      next(redirect)
+      return;
+    }
   } else {
     next();
   }
-})
-
-router.afterEach((to) => {
-  document.title = to.meta.title || to.name || 'Kent Hack Enough';
 })
 
 export default router
