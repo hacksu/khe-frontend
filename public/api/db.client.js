@@ -23,7 +23,7 @@ let phoneNumber = require('libphonenumber-js')
 module.exports = new Schema({
   user: {
     type: ObjectId,
-    ref: 'Users',
+    ref: 'User',
   },
   age: {
     type: Number,
