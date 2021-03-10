@@ -94,7 +94,7 @@ let redirects = {
       })
     }
   },
-  '/logout': () => {
+  '/logout': ({ next }) => {
     store.dispatch('logout').then(() => {
       next('/login');
     }).catch(() => {
