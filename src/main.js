@@ -4,12 +4,8 @@ import router from './router'
 import store from './store'
 import responsive from '@/components/responsive';
 
-import DatabaseClient from '@/db';
-let { ApplicationSchema, Validate } = DatabaseClient;
-console.log({ ApplicationSchema, Validate })
-
-
-createApp(App).use(store).use(router).use(responsive).mount('#app');
+let app = createApp(App);
+app.use(store).use(router).use(responsive).mount('#app');
 
 console.log(store);
 if (store.state.auth.token) {

@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <div v-if="Ready">
     hmmm
     <component :is="'application-page-' + page"/>
     <br>
 
-    <hr>{{ Application.toObject() }}<hr>
+    <hr>{{ Application }}<hr>
 
     <button v-on:click="prev">&lt;</button>
     {{ (page + 1) }} of {{ pageCount }}
@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import Application from './application';
+import { Application, Ready } from './application';
 
 
 import PageOne from './pages/PageOne.vue';
@@ -42,6 +42,7 @@ export default {
       //pages: Pages.length,
       page: 0,
       Application,
+      Ready,
     }
   },
   computed: {
@@ -76,8 +77,6 @@ export default {
           return;
         }
       }
-      console.log(Math.max(0, Math.min(pageCount - 1, pages.findIndex(o => o.index == page) + n)));
-      console.log(pages);
       let nextPage = pages[Math.max(0, Math.min(pageCount - 1, pages.findIndex(o => o.index == page) + n))];
       this.page = nextPage.index;
     }
