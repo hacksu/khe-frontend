@@ -28,6 +28,10 @@ module.exports = new Schema({
     type: ObjectId,
     ref: 'User',
   },
+  valid: {
+    type: Boolean,
+    default: false,
+  },
   age: {
     type: Number,
     validate: {

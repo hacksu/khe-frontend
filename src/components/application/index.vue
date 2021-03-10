@@ -4,6 +4,8 @@
     <component :is="'application-page-' + page"/>
     <br>
 
+    <hr>{{ Application.toObject() }}<hr>
+
     <button v-on:click="prev">&lt;</button>
     {{ (page + 1) }} of {{ pageCount }}
     <button v-on:click="next">&gt;</button>
@@ -12,9 +14,7 @@
 
 <script>
 import Application from './application';
-import DatabaseClient from '@/db';
-let { ApplicationSchema, Validate } = DatabaseClient;
-console.log({ ApplicationSchema, Validate })
+
 
 import PageOne from './pages/PageOne.vue';
 import PageTwo from './pages/PageTwo.vue';
