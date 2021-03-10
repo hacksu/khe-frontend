@@ -1,5 +1,8 @@
 
 import _ from 'lodash';
+import DatabaseClient from '@/db';
+let { ApplicationSchema } = DatabaseClient;
+console.log({ ApplicationSchema })
 
 const flattenObject = (obj = {}, doArrays=false) => {
   const result = {};
@@ -68,4 +71,34 @@ export let Validator = function(schema) {
 }
 
 
-export default window.require('db');
+Validate(ApplicationSchema, {
+  phone: '123',
+  education: {
+    major: 'yea',
+    school: 'ok',
+  },
+  dietary: [
+    'Vegan',
+    'def',
+  ]
+}).then(console.log);
+
+Validate(ApplicationSchema, {
+  phone: '+1 123 1234 1234',
+  education: {
+    major: 'yea',
+    school: 'ok',
+  },
+  dietary: [
+    'abc',
+    'def',
+  ]
+}, ['phone']).then(console.log);
+
+
+let ApplicationValidator = Validator(ApplicationSchema);
+ApplicationValidator({
+  phone: '123',
+}).then(console.log);
+
+//console.log(flattenObject(ApplicationSchema));

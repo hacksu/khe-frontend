@@ -5,6 +5,8 @@ import { withDirectives, resolveDirective } from 'vue';
 
 window.$application = Application;
 
+
+
 let messages = {
 
 }

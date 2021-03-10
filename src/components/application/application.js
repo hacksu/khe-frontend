@@ -1,6 +1,6 @@
 
 import DatabaseClient from '@/db';
-let { ApplicationSchema } = DatabaseClient;
+let { ApplicationSchema, Validate, Validator } = DatabaseClient;
 console.log({ ApplicationSchema })
 
 import mongoose from 'mongoose';
@@ -41,4 +41,4 @@ fetch('/api/application.json').then(res => res.json()).then(data => {
 
 export default application;
 export let Application = application;
-export let Validate = validate;
+//export let Validate = validate;

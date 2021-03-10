@@ -2,17 +2,16 @@
   hi there
   <!--<button v-on:click="Application.bruh = !Application.bruh">{{ Application.bruh ? 'turn bruh off' : 'turn bruh on' }}</button>-->
   <br>
-  <input v-application.phone>
-  {{ invalid.phone }}
+  <input>
 </template>
 
 <script>
 //import Application, { Validate } from '../application';
-import { setup, directives } from '../logic';
+//import { setup, directives } from '../logic';
 
 export default {
-  setup,
-  directives,
+  //setup,
+  //directives,
   /*data() {
     return {
       Application,
